@@ -30,3 +30,12 @@ root = current_directory.goto_root()
 a = root.walk_full_tree()
 less_than_100k = sum([v for (k,v) in a if v < 100000])
 ttl = sum([v for (k, v) in a])
+
+total_space_avail = 70000000
+total_space_required = 30000000
+
+currently_used_space = root.calc_dir_total_size()
+currently_free = total_space_avail - currently_used_space
+required = total_space_required - currently_free
+
+min([v for (k,v) in a if v > required])
