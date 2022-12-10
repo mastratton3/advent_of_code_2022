@@ -64,10 +64,11 @@ def determine_move(h_t_delta: Pos):
 
 class GameBoard(object):
 
-    def __init__(self):
+    def __init__(self, tail_length=1):
         self.hpos = Pos(0,0)
-        self.tpos = Pos(0,0)
-        self.tail_visits = set([self.tpos])
+        self.tpos = [Pos(0,0) for _ in range(0, tail_length)]
+        self.tail_visits = set([self.tpos[-1]])
+        self.tail_length=tail_length
 
     def __repr__(self):
         return f"GameBoard(hpos={self.hpos}, tpos={self.tpos}, tail_visits={self.tail_visits})"
@@ -79,16 +80,20 @@ class GameBoard(object):
         x_change = x_change_dict[direction]
         y_change = y_change_dict[direction]
         self.hpos = self.hpos + (x_change, y_change)
-        self.move_t()
+        self.move_t(0)
         num_times -= 1
         if num_times > 0:
             self.move_h(direction, num_times)
 
-    def move_t(self):
-        h_t_delta = self.hpos - self.tpos
+    def move_t(self, entry):
+        head_to_use = self.hpos if entry == 0 else self.tpos[entry - 1]
+        h_t_delta = head_to_use - self.tpos[entry]
         move = determine_move(h_t_delta)
-        self.tpos = self.tpos + move
-        self.tail_visits.add(self.tpos)
+        self.tpos[entry] = self.tpos[entry] + move
+        if entry + 1 == self.tail_length:
+            self.tail_visits.add(self.tpos[-1])
+        else:
+            self.move_t(entry + 1)
 
 
 

@@ -39,10 +39,23 @@ def test_determine_move():
 def test_board_moving():
     gb = GameBoard()
     gb.move_h("U", 1)
-    assert (gb.hpos == Pos(0, 1)) and (gb.tpos == Pos(0,0))
+    assert (gb.hpos == Pos(0, 1)) and (gb.tpos[-1] == Pos(0,0))
     gb.move_h("U", 1)
-    assert (gb.hpos == Pos(0, 2) and gb.tpos == Pos(0, 1))
+    assert (gb.hpos == Pos(0, 2) and gb.tpos[-1] == Pos(0, 1))
     gb.move_h("R", 2)
-    assert (gb.hpos == Pos(2, 2) and gb.tpos == Pos(1, 2))
+    assert (gb.hpos == Pos(2, 2) and gb.tpos[-1] == Pos(1, 2))
     assert gb.tail_visits == set([Pos(0, 0,), Pos(0,1), Pos(1,2)])
+
+
+def test_larger_board():
+    gb = GameBoard(9)
+    gb.move_h("R", 5)
+    gb.move_h("U", 8)
+    gb.move_h("L", 8)
+    gb.move_h("D", 3)
+    gb.move_h("R", 17)
+    gb.move_h("D", 10)
+    gb.move_h("L", 25)
+    gb.move_h("U", 20)
+    assert len(gb.tail_visits) == 36
 
