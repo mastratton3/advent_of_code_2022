@@ -13,3 +13,4 @@ for line in lines:
 
 print(gb)
 print(f"Num positions tail visited: {len(gb.tail_visits)}")
+
