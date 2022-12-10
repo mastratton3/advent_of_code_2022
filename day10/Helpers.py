@@ -1,4 +1,13 @@
 
+def render_row(l):
+    gen = range(0,len(l))
+    entries = []
+    for i in gen:
+        current_val = l[i]
+        current_pos = i
+        val_to_append = "#" if (current_pos >= (current_val - 1)) and (current_pos <= (current_val + 1)) else "."
+        entries.append(val_to_append)
+    return "".join(entries)
 
 class CRDT(object):
 
