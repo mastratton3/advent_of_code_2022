@@ -11,11 +11,13 @@ for line in lines:
     forest.add_row(row)
 
 num_visible = forest.visibility_count()
+max_scenic_score = max(forest.full_scenic_score_table())
 
 print(f"Num Rows: {len(lines)}")
 print(f"Num Cols: {forest.calc_num_columns()}")
 print(f"Num Trees: {len(lines) * forest.calc_num_columns()}")
 print(f"Num Trees Visible: {num_visible}")
+print(f"Max Scenic Score: {max_scenic_score}")
 
 # A couple ways to approach the problem.
 # One way to attack is to write a function that goes over rows from right and left, returns T/F if visible. Just needs to track previously seen max
