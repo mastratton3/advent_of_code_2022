@@ -1,7 +1,6 @@
 
 from Helpers import *
 
-
 monkey0 = Monkey([71, 56, 50, 73],
                 lambda x: x * 11,
                 13,
