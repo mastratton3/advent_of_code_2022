@@ -1,4 +1,5 @@
 import math
+from functools import reduce
 
 def process_items_to_send(items_to_send, monkey_dict):
     for (monkey_num, items) in items_to_send.items():
@@ -20,9 +21,16 @@ class Monkey(object):
     def run_test(self, input):
         return (input % self.monkey_test) == 0
 
+    def calc_divisor(self, n):
+        divisors = [13, 7, 3, 19, 5, 2, 11, 17]
+        factors = [x for x in divisors if n % x == 0]
+        factor = reduce(lambda x, y: x * y, factors) if len(factors) > 0 else 1
+        return factor
+
     def process_item(self):
         item_to_proc = self.items.pop(0)
-        new_item_val = math.floor(self.monkey_func(item_to_proc) / 3)
+        divisor = self.calc_divisor(item_to_proc)
+        new_item_val = self.monkey_func(item_to_proc) / divisor
         self.num_inspected += 1
         return (self.toss_to[self.run_test(new_item_val)], new_item_val)
 

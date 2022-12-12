@@ -64,7 +64,7 @@ def run_round():
         to_send = monkey.run_all_items()
         process_items_to_send(to_send, monkeys)
 
-for _ in range(0,20):
+for _ in range(0,10000):
     run_round()
 
 num_inspected = [v.num_inspected for (k,v) in monkeys.items()]
